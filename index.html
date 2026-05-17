@@ -1,34 +1,307 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KueNTハウス</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+      background: #f4efe5;
+      color: #2f261d;
+      line-height: 1.8;
+    }
+
+    .page {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 32px 18px 56px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+      letter-spacing: 0.08em;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: #6f6256;
+    }
+
+    .house-box {
+      background: #fffaf0;
+      border: 2px solid #8b7355;
+      border-radius: 12px;
+      padding: 22px;
+      margin-bottom: 24px;
+      box-shadow: 4px 4px 0 rgba(88, 66, 44, 0.18);
+    }
+
+    .status {
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+    }
+
+    .nail-count {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin: 12px 0;
+    }
+
+    .npc {
+      background: #efe2cc;
+      border-left: 6px solid #6e5135;
+      padding: 16px;
+      margin: 18px 0;
+      border-radius: 8px;
+    }
+
+    .npc-name {
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .links a {
+      display: block;
+      margin: 10px 0;
+      color: #5a3820;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .links a:hover {
+      text-decoration: underline;
+    }
+
+    .small {
+      font-size: 0.9rem;
+      color: #6f6256;
+    }
+
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #7c6e62;
+    }
+  </style>
 </head>
 <body>
+  <div class="page">
+    <header>
+      <h1>KueNTハウス</h1>
+      <p class="subtitle">まだ、ハウスではありません。</p>
+    </header>
 
-  <h1>KueNTハウス</h1>
+    <section class="house-box">
+      <p>
+        ここは、用事がなくても来ていい家です。<br />
+        誰かが来るたび、釘が一本増えます。<br />
+        何度か訪れた人だけが、見られるものがあります。
+      </p>
+    </section>
 
-  <p>
-    ここは、ほそ神の作品世界から派生した小さな体験型ページです。
-  </p>
+    <section class="house-box">
+      <h2>現在の状態</h2>
+      <p id="houseStatus" class="status">読み込み中...</p>
+      <p id="nailCount" class="nail-count">釘 0本</p>
+      <p id="visitMessage" class="small"></p>
+    </section>
 
-  <p>
-    まだ建設中です。  
-    釘が立ち、壁ができ、少しずつ家になっていきます。
-  </p>
+    <section class="house-box">
+      <h2>村人</h2>
 
-  <h2>現在の状態</h2>
-  <p>
-    まだこの家を知っている人は少ないようです。
-  </p>
+      <div class="npc" id="nailKeeper">
+        <div class="npc-name">釘番</div>
+        <div id="nailKeeperText">
+          「来たな。ここは、まだ家と呼ぶには早い場所です。
+          でも、誰かが来るたびに釘が増えます。」
+        </div>
+      </div>
 
-  <h2>案内</h2>
-  <ul>
-    <li>作品本編：カクヨム</li>
-    <li>制作記録：note</li>
-    <li>KueNTハウス：ここ</li>
-  </ul>
+      <div class="npc" id="boardCarrier" style="display: none;">
+        <div class="npc-name">板持ち</div>
+        <div>
+          「釘だけでは寒いからな。そろそろ壁を作る。」
+        </div>
+      </div>
 
+      <div class="npc" id="pillarKeeper" style="display: none;">
+        <div class="npc-name">柱番</div>
+        <div>
+          「柱が立つと、ここは小屋ではなくなってくる。」
+        </div>
+      </div>
+
+      <div class="npc" id="bookKeeper" style="display: none;">
+        <div class="npc-name">本棚係</div>
+        <div>
+          「完成した本より、書きかけの本のほうが静かに重い。」
+        </div>
+      </div>
+
+      <div class="npc" id="soundListener" style="display: none;">
+        <div class="npc-name">音聞き</div>
+        <div>
+          「この部屋は、ときどき音がします。長くは鳴りません。」
+        </div>
+      </div>
+    </section>
+
+    <section class="house-box">
+      <h2>案内</h2>
+      <div class="links">
+        <a href="https://kakuyomu.jp/users/KueNT" target="_blank" rel="noopener">
+        本棚：カクヨム
+        </a>
+        <a href="https://note.com/happy_sloth9144" target="_blank" rel="noopener">
+        設計メモ：note
+        </a>
+      </div>
+      <p class="small">
+        ※リンク先はあとで設定します。
+      </p>
+    </section>
+
+    <footer>
+      KueNTハウス / ほそ神
+    </footer>
+  </div>
+
+  <script>
+    // =========================
+    // 仮の釘数
+    // =========================
+    // 後でCounterAPIなどに差し替える。
+    // いまはここを書き換えるだけで成長段階を確認できる。
+    const manualNailCount = 1;
+
+    // =========================
+    // Cookie操作
+    // =========================
+    function getCookie(name) {
+      const cookies = document.cookie.split("; ");
+      for (const cookie of cookies) {
+        const [key, value] = cookie.split("=");
+        if (key === name) return decodeURIComponent(value);
+      }
+      return null;
+    }
+
+    function setCookie(name, value, days) {
+      const expires = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
+      document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
+    }
+
+    function addVisitCount() {
+      const todayKey = "visited_today";
+      const visitKey = "visit_count";
+
+      const visitedToday = getCookie(todayKey);
+      let visitCount = Number(getCookie(visitKey) || 0);
+
+      if (!visitedToday) {
+        visitCount += 1;
+        setCookie(todayKey, "yes", 1);
+        setCookie(visitKey, String(visitCount), 365);
+        return {
+          visitCount,
+          message: "あなたが来たので、釘が1本増えました。"
+        };
+      }
+
+      return {
+        visitCount,
+        message: "今日はもう、あなたの釘が打たれています。"
+      };
+    }
+
+    // =========================
+    // 家の成長表示
+    // =========================
+    function updateHouse(nailCount) {
+      const houseStatus = document.getElementById("houseStatus");
+      const nailCountText = document.getElementById("nailCount");
+      const nailKeeperText = document.getElementById("nailKeeperText");
+
+      const boardCarrier = document.getElementById("boardCarrier");
+      const pillarKeeper = document.getElementById("pillarKeeper");
+      const bookKeeper = document.getElementById("bookKeeper");
+      const soundListener = document.getElementById("soundListener");
+
+      nailCountText.textContent = `釘 ${nailCount}本`;
+
+      if (nailCount <= 30) {
+        houseStatus.textContent = "まだこの家を知っている人は少ないようです。";
+        nailKeeperText.textContent =
+          "「来たな。ここは、まだ家と呼ぶには早い場所です。でも、誰かが来るたびに釘が増えます。」";
+      } else if (nailCount <= 100) {
+        houseStatus.textContent = "釘はまだ少ししかありません。でも、誰かは来ています。";
+        nailKeeperText.textContent =
+          "「釘の音が増えてきたな。まだ壁はないが、ここを覚えている人はいる。」";
+      } else if (nailCount <= 300) {
+        houseStatus.textContent = "壁ができはじめています。";
+        boardCarrier.style.display = "block";
+        nailKeeperText.textContent =
+          "「板持ちが来た。そろそろ風を防げるかもしれません。」";
+      } else if (nailCount <= 1000) {
+        houseStatus.textContent = "この場所は、家になろうとしています。";
+        boardCarrier.style.display = "block";
+        pillarKeeper.style.display = "block";
+        nailKeeperText.textContent =
+          "「柱番まで来たか。ここはもう、ただの小屋ではないのかもしれません。」";
+      } else {
+        houseStatus.textContent = "KueNTハウスになりました。";
+        boardCarrier.style.display = "block";
+        pillarKeeper.style.display = "block";
+        bookKeeper.style.display = "block";
+        soundListener.style.display = "block";
+        nailKeeperText.textContent =
+          "「長かったな。ここは、KueNTハウスになりました。」";
+      }
+    }
+
+    // =========================
+    // 夜判定
+    // =========================
+    function isNight() {
+      const hour = new Date().getHours();
+      return hour >= 20 || hour < 5;
+    }
+
+    function updateNightHint(visitCount) {
+      const visitMessage = document.getElementById("visitMessage");
+
+      if (visitCount >= 3 && isNight()) {
+        visitMessage.textContent =
+          "この家はあなたを覚えています。夜に来る人は、なにかを見ることがあります。";
+      } else if (visitCount >= 3) {
+        visitMessage.textContent =
+          "この家はあなたを覚えています。夜に来る人は、なにかを見ることがあります。";
+      }
+    }
+
+    // =========================
+    // 初期化
+    // =========================
+    const visit = addVisitCount();
+
+    document.getElementById("visitMessage").textContent = visit.message;
+
+    // 仮仕様：
+    // 実際は「全体の釘数」をCounterAPIから取得する。
+    // いまは manualNailCount に、今回の訪問分を足して表示する。
+    const currentNails = manualNailCount;
+    updateHouse(currentNails);
+    updateNightHint(visit.visitCount);
+  </script>
 </body>
 </html>
